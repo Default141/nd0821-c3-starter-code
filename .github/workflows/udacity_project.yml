@@ -9,6 +9,10 @@ jobs:
       matrix:
         python-version: ["3.8", "3.9", "3.10"]
     steps:
+    
+    - name: Checkout
+      uses: actions/checkout@v2
+
     - name: "Configure AWS Credentials" Action For GitHub Actions
       uses: aws-actions/configure-aws-credentials@v1
       with:
