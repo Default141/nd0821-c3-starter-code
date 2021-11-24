@@ -1,6 +1,6 @@
 name: udacity_project
 
-on: [push,pull]
+on: [push]
 
 jobs:
   build:
