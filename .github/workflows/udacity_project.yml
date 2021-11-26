@@ -21,3 +21,6 @@ jobs:
         aws-access-key-id: AKIA2J3CN2DS5RW2GBDH
         aws-secret-access-key: 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
         aws-region: us-east-1
+        
+    - name: setup-dvc
+      uses: iterative/setup-dvc@v1
