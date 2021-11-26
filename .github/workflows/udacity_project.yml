@@ -24,3 +24,6 @@ jobs:
         
     - name: setup-dvc
       uses: iterative/setup-dvc@v1
+    
+    - name: run dvc 
+      run: dvc pull
