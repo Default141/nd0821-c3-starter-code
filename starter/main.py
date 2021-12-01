@@ -30,7 +30,7 @@ class Data(BaseModel):
 
 @app.get("/")
 def read_root():
-    return {"Welcome to Census prediction model"}
+    return {"Welcome to Salary prediction model"}
 
 
 @app.post("/model/inferance")
@@ -70,4 +70,7 @@ def inferance_model(data_input: Data):
     X, _, _, _ = process_data(
         data, categorical_features=cat_features, training=False, encoder = enc, lb = lb_enc) 
     result = inference(model, X)
-    return result[0]
+    if result[0] >= 0.1:
+        return '>50K'
+    else:
+        return '<=50K'
