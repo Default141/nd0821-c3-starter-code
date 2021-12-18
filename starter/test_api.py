@@ -1,14 +1,11 @@
-import pandas as pd
-import numpy as np
 from fastapi import FastAPI
-from starter.ml.model import inference
-from starter.ml.data import process_data
 import requests
 import json
 
 app = FastAPI()
 
-def test_check_response_code_get(): 
+
+def test_check_response_code_get():
     response = requests.get("http://127.0.0.1:8000/")
     assert response.status_code == 200
 
@@ -19,7 +16,7 @@ def test_check_response_content_get():
 
 
 def test_check_response_code_post():
-    data = {           
+    data = {
             "age": 39,
             "workclass": "State-gov",
             "fnlgt": 77516,
@@ -28,7 +25,7 @@ def test_check_response_code_post():
             "marital_status": "Never-married",
             "occupation": "Adm-clerical",
             "relationship": "Not-in-family",
-            "race": "White",  
+            "race": "White",
             "sex": "Male",
             "capital_gain": 2174,
             "capital_loss": 0,
@@ -39,8 +36,9 @@ def test_check_response_code_post():
     response = requests.post("http://127.0.0.1:8000/model/inferance", data)
     assert response.status_code == 200
 
+
 def test_check_response_content_post_1():
-    data = {           
+    data = {
             "age": 39,
             "workclass": "State-gov",
             "fnlgt": 77516,
@@ -49,7 +47,7 @@ def test_check_response_content_post_1():
             "marital_status": "Never-married",
             "occupation": "Adm-clerical",
             "relationship": "Not-in-family",
-            "race": "White",  
+            "race": "White",
             "sex": "Male",
             "capital_gain": 2174,
             "capital_loss": 0,
@@ -59,6 +57,7 @@ def test_check_response_content_post_1():
     data = json.dumps(data).encode('utf8')
     response = requests.post("http://127.0.0.1:8000/model/inferance", data)
     assert response.json() == '<=50K'
+
 
 def test_check_response_content_post_2():
     data = {
@@ -79,6 +78,4 @@ def test_check_response_content_post_2():
             }
     data = json.dumps(data).encode('utf8')
     response = requests.post("http://127.0.0.1:8000/model/inferance", data)
-    assert response.json()== '>50K'
-
-#test
+    assert response.json() == '>50K'

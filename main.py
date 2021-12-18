@@ -1,17 +1,25 @@
 # Put the code for your API here.
-from typing import Optional
+"""
+main inferance for model API
+Author: Virut Ratinimittham
+"""
+
 from fastapi import FastAPI
-from starter.starter.ml.model import inference
-from starter.starter.ml.data import process_data
 from pydantic import BaseModel
 import joblib
-import numpy as np
 import pandas as pd
-
+from starter.starter.ml.model import inference
+from starter.starter.ml.data import process_data
 
 app = FastAPI()
 
+
 class Data(BaseModel):
+    """Body for data
+
+    Args:
+        BaseModel ([type]): data structure
+    """
     age: int
     workclass: str
     fnlgt: int
@@ -30,11 +38,19 @@ class Data(BaseModel):
 
 @app.get("/")
 def read_root():
+    """Greeting message"""
     return {"Welcome to Salary prediction model"}
 
 
 @app.post("/model/inferance")
 def inferance_model(data_input: Data):
+    """
+    inferance model
+
+    input: data_input data for prediction
+
+    output: prediction result
+    """
     data = pd.DataFrame([{
             "age": data_input.age,
             "workclass": data_input.workclass,
@@ -67,10 +83,12 @@ def inferance_model(data_input: Data):
     enc = joblib.load("model/encoder.enc")
     lb_enc = joblib.load("model/lb.enc")
 
-    X, _, _, _ = process_data(
-        data, categorical_features=cat_features, training=False, encoder = enc, lb = lb_enc) 
-    result = inference(model, X)
+    processed_data, _, _, _ = process_data(
+        data, categorical_features=cat_features,
+        training=False,
+        encoder=enc,
+        lb=lb_enc)
+    result = inference(model, processed_data)
     if result[0] >= 0.1:
         return '>50K'
-    else:
-        return '<=50K'
+    return '<=50K'
