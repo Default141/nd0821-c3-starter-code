@@ -1,8 +1,8 @@
 # Put the code for your API here.
 from typing import Optional
 from fastapi import FastAPI
-from starter.ml.model import inference
-from starter.ml.data import process_data
+from starter.starter.ml.model import inference
+from starter.starter.ml.data import process_data
 from pydantic import BaseModel
 import joblib
 import numpy as np
