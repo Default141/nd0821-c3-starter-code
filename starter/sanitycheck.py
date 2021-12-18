@@ -63,9 +63,10 @@ def run_sanity_check(test_dir):
     else:
         for func in test_functions_for_get:
             source = inspect.getsource(getattr(module, func))
-            if source.find('.status_code') != -1:
+            sf = source.find
+            if sf('.status_code') != -1:
                 TEST_FOR_GET_METHOD_RESPONSE_CODE = True
-            if (source.find('.json') != -1) or (source.find('json.loads') != -1):
+            if (sf('.json') != -1) or (sf('json.loads') != -1):
                 TEST_FOR_GET_METHOD_RESPONSE_BODY = True
 
         if not TEST_FOR_GET_METHOD_RESPONSE_CODE:
@@ -77,7 +78,8 @@ def run_sanity_check(test_dir):
         if not TEST_FOR_GET_METHOD_RESPONSE_BODY:
             print(FAIL_COLOR + f"[{WARNING_COUNT}]")
             WARNING_COUNT += 1
-            print(FAIL_COLOR + "Your test case for GET() does not seem to be \
+            print(FAIL_COLOR + "Your test case \
+                for GET() does not seem to be \
                 testing the CONTENTS of the response.\n")
 
     # POST()
@@ -88,7 +90,8 @@ def run_sanity_check(test_dir):
     if not test_functions_for_post:
         print(FAIL_COLOR + f"[{WARNING_COUNT}]")
         WARNING_COUNT += 1
-        print(FAIL_COLOR + "No test cases were detected for the POST() method.")
+        print(FAIL_COLOR + "No test cases were\
+             detected for the POST() method.")
         print(FAIL_COLOR + "Please make sure you have \
             TWO test cases for the POST() method." +
               "\nOne test case for EACH of the possible \
@@ -108,9 +111,10 @@ def run_sanity_check(test_dir):
 
         for func in test_functions_for_post:
             source = inspect.getsource(getattr(module, func))
-            if source.find('.status_code') != -1:
+            sf = source.find
+            if sf('.status_code') != -1:
                 TEST_FOR_POST_METHOD_RESPONSE_CODE = True
-            if (source.find('.json') != -1) or (source.find('json.loads') != -1):
+            if (sf('.json') != -1) or (sf('json.loads') != -1):
                 TEST_FOR_POST_METHOD_RESPONSE_BODY = True
                 COUNT_POST_METHOD_TEST_FOR_INFERENCE_RESULT += 1
 
@@ -119,21 +123,24 @@ def run_sanity_check(test_dir):
             WARNING_COUNT += 1
             print(
                 FAIL_COLOR +
-                "One or more of your test cases for POST() do not seem to be testing the response code.\n")
+                "One or more of your test cases for POST() \
+                    do not seem to be testing the response code.\n")
         if not TEST_FOR_POST_METHOD_RESPONSE_BODY:
             print(FAIL_COLOR + f"[{WARNING_COUNT}]")
             WARNING_COUNT += 1
             print(
                 FAIL_COLOR +
-                "One or more of your test cases for POST() do not seem to be testing the contents of the response.\n")
-
+                "One or more of your test cases for POST() \
+                    do not seem to be testing the contents of the response.\n")
+        COUNT_POST = COUNT_POST_METHOD_TEST_FOR_INFERENCE_RESULT
         if len(
-                test_functions_for_post) >= 2 and COUNT_POST_METHOD_TEST_FOR_INFERENCE_RESULT < 2:
+                test_functions_for_post) >= 2 and COUNT_POST < 2:
             print(FAIL_COLOR + f"[{WARNING_COUNT}]")
             WARNING_COUNT += 1
             print(
                 FAIL_COLOR +
-                "You do not seem to have TWO separate test cases, one for each possible prediction that your model can make.")
+                "You do not seem to have TWO separate test cases, \
+                one for each possible prediction that your model can make.")
 
     SANITY_TEST_PASSING = SANITY_TEST_PASSING and\
         TEST_FOR_GET_METHOD_RESPONSE_CODE and \
@@ -147,10 +154,12 @@ def run_sanity_check(test_dir):
 
     print(
         WARN_COLOR +
-        "This is a heuristic based sanity testing and cannot guarantee the correctness of your code.")
+        "This is a heuristic based sanity testing \
+        and cannot guarantee the correctness of your code.")
     print(
         WARN_COLOR +
-        "You should still check your work against the rubric to ensure you meet the criteria.")
+        "You should still check your work against\
+         the rubric to ensure you meet the criteria.")
 
 
 if __name__ == "__main__":
