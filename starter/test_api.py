@@ -80,3 +80,5 @@ def test_check_response_content_post_2():
     data = json.dumps(data).encode('utf8')
     response = requests.post("http://127.0.0.1:8000/model/inferance", data)
     assert response.json()== '>50K'
+
+#test
