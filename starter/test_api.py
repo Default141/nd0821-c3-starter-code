@@ -8,17 +8,16 @@ import json
 
 app = FastAPI()
 
-@app.get("/check_response_code")
 def test_check_response_code_get(): 
     response = requests.get("http://127.0.0.1:8000/")
     assert response.status_code == 200
 
-@app.get("/check_response_content")
+
 def test_check_response_content_get():
     response = requests.get("http://127.0.0.1:8000/")
     assert response.json()[0] == "Welcome to Salary prediction model"
 
-@app.post("/check_data")
+
 def test_check_response_code_post():
     data = {           
             "age": 39,
@@ -40,7 +39,6 @@ def test_check_response_code_post():
     response = requests.post("http://127.0.0.1:8000/model/inferance", data)
     assert response.status_code == 200
 
-@app.post("/check_result_1")
 def test_check_response_content_post_1():
     data = {           
             "age": 39,
@@ -62,7 +60,6 @@ def test_check_response_content_post_1():
     response = requests.post("http://127.0.0.1:8000/model/inferance", data)
     assert response.json() == '<=50K'
 
-@app.post("/check_result_2")
 def test_check_response_content_post_2():
     data = {
             "age": 38,
