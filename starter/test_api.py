@@ -37,7 +37,7 @@ def test_check_response_code_post():
     assert response.status_code == 200
 
 
-def test_check_response_content_post_1():
+def test_check_result_less_than_50K():
     data = {
         "age": 39,
         "workclass": "State-gov",
@@ -59,7 +59,7 @@ def test_check_response_content_post_1():
     assert response.json() == '<=50K'
 
 
-def test_check_response_content_post_2():
+def test_check_result_more_than_50K():
     data = {
         "age": 38,
         "workclass": "Private",

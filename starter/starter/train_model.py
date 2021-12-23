@@ -2,6 +2,7 @@
 import joblib
 from sklearn.model_selection import train_test_split
 import pandas as pd
+import numpy as np
 from ml.data import process_data
 from ml.model import train_model
 
@@ -36,6 +37,9 @@ X_test, y_test, encoder, lb = process_data(
     encoder=encoder,
     lb=lb
 )
+
+np.savetxt("../data/X_train.csv", X_train)
+np.savetxt("../data/y_train.csv", y_train)
 
 # Train and save a model.
 model = train_model(X_train, y_train)
