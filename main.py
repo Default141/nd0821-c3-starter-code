@@ -35,6 +35,7 @@ class Data(BaseModel):
     hours_per_week: float
     native_country: str
     class Config:
+        
         schema_extra = {
             "example": {
                 "age": 39,
@@ -54,6 +55,7 @@ class Data(BaseModel):
             }
         }
 
+        
 @app.get("/")
 def read_root():
     """Greeting message"""
