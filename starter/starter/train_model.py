@@ -67,11 +67,12 @@ joblib.dump(encoder, "../model/encoder.enc")
 joblib.dump(lb, "../model/lb.enc")
 # mlflow.sklearn.save_model(model,"../model/model")
 
+
 def model_slice_metrix():
-    education_slice = ['Bachelors', 'Some-college', '11th', 'HS-grad', 
-                        'Prof-school', 'Assoc-acdm', 'Assoc-voc', '9th', 
-                        '7th-8th', '12th', 'Masters', '1st-4th', '10th', 
-                        'Doctorate', '5th-6th', 'Preschool']
+    education_slice = ['Bachelors', 'Some-college', '11th', 'HS-grad',
+                       'Prof-school', 'Assoc-acdm', 'Assoc-voc', '9th',
+                       '7th-8th', '12th', 'Masters', '1st-4th', '10th',
+                       'Doctorate', '5th-6th', 'Preschool']
     print(data)
     for slice in education_slice:
         data_slice = data[data["education"] == slice]
@@ -84,7 +85,8 @@ def model_slice_metrix():
             lb=lb
         )
         pred_validate = inference(model, X_test_slice)
-        precision, recall, fbeta = compute_model_metrics(pred_validate, y_test_slice)
+        precision, recall, fbeta = compute_model_metrics(pred_validate,
+                                                         y_test_slice)
         metrics = {
             "precision": [precision],
             "recall": [recall],

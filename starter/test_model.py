@@ -3,6 +3,7 @@ import pandas as pd
 from starter.ml.model import inference
 from starter.ml.data import process_data
 
+
 def test_check_result_less_than_50K():
     data = pd.DataFrame([{
         "age": 39,
@@ -36,7 +37,7 @@ def test_check_result_less_than_50K():
     lb_enc = joblib.load("./model/lb.enc")
 
     processed_data, _, _, _ = process_data(
-        data, 
+        data,
         categorical_features=cat_features,
         training=False,
         encoder=enc,
@@ -78,7 +79,7 @@ def test_check_result_more_than_50K():
     lb_enc = joblib.load("./model/lb.enc")
 
     processed_data, _, _, _ = process_data(
-        data, 
+        data,
         categorical_features=cat_features,
         training=False,
         encoder=enc,
