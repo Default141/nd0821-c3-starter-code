@@ -1,4 +1,0 @@
-outs:
-- md5: 5af55af12f58eec63fda54d69040b2fc
-  size: 71688
-  path: RandomForestRegressor_model.pkl
