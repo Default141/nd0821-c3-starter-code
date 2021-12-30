@@ -22,10 +22,8 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
         
-    - name: Python Pylin GitHub Action
-      uses: fylein/python-pytest-github-action@v1
-      with:
-        args: pip3 install -r requirements.txt && pytest test/unit
+    - name: Pytest Coverage Commentator
+      uses: coroo/pytest-coverage-commentator@v1.0.2
           
     - name: setup-dvc
       uses: iterative/setup-dvc@v1
