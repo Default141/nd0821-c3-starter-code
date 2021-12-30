@@ -1,6 +1,5 @@
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.ensemble import RandomForestRegressor
-
 # Optional: implement hyperparameter tuning.
 
 
@@ -63,5 +62,7 @@ def inference(model, X):
         Predictions from the model.
     """
     pred = model.predict(X)
+    pred = pred >= 0.1
+    pred = pred.astype(int)
     return pred
     pass

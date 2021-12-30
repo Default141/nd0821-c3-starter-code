@@ -107,6 +107,6 @@ def inferance_model(data_input: Data):
         encoder=enc,
         lb=lb_enc)
     result = inference(model, processed_data)
-    if result[0] >= 0.1:
+    if result[0] == 1:
         return '>50K'
     return '<=50K'
