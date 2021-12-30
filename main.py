@@ -34,6 +34,7 @@ class Data(BaseModel):
     capital_loss: int
     hours_per_week: float
     native_country: str
+
     class Config:
         schema_extra = {
             "example": {
@@ -53,6 +54,7 @@ class Data(BaseModel):
                 "native_country": "United-States"
             }
         }
+
 
 @app.get("/")
 def read_root():
