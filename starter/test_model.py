@@ -1,88 +1,37 @@
-import joblib
 import pandas as pd
-from starter.ml.model import inference
+import numpy as np
+from sklearn.model_selection import train_test_split
+from starter.ml.model import train_model
 from starter.ml.data import process_data
 
 
-def test_check_result_less_than_50K():
-    data = pd.DataFrame([{
-        "age": 39,
-        "workclass": "State-gov",
-        "fnlgt": 77516,
-        "education": "Bachelors",
-        "education_num": 13,
-        "marital-status": "Never-married",
-        "occupation": "Adm-clerical",
-        "relationship": "Not-in-family",
-        "race": "White",
-        "sex": "Male",
-        "capital_gain": 2174,
-        "capital_loss": 0,
-        "hours_per_week": 40,
-        "native-country": "United-States"
-    }])
-    cat_features = [
-        "workclass",
-        "education",
-        "marital-status",
-        "occupation",
-        "relationship",
-        "race",
-        "sex",
-        "native-country"
-    ]
+data = pd.read_csv('./data/census.csv')
+train, test = train_test_split(data, test_size=0.20)
+cat_features = [
+    "workclass",
+    "education",
+    "marital-status",
+    "occupation",
+    "relationship",
+    "race",
+    "sex",
+    "native-country",
+]
 
-    model = joblib.load("./model/RandomForestRegressor_model.pkl")
-    enc = joblib.load("./model/encoder.enc")
-    lb_enc = joblib.load("./model/lb.enc")
-
-    processed_data, _, _, _ = process_data(
-        data,
-        categorical_features=cat_features,
-        training=False,
-        encoder=enc,
-        lb=lb_enc)
-    result = inference(model, processed_data)
-    assert result == 0
+X_train, y_train, encoder, lb = process_data(
+    train, categorical_features=cat_features, label="salary", training=True
+)
+print(type(X_train))
+model = train_model(X_train, y_train)
 
 
-def test_check_result_more_than_50K():
-    data = pd.DataFrame([{
-        "age": 38,
-        "workclass": "Private",
-        "fnlgt": 28887,
-        "education": "11th",
-        "education_num": 7,
-        "marital-status": "Married-civ-spouse",
-        "occupation": "Sales",
-        "relationship": "Husband",
-        "race": "White",
-        "sex": "Male",
-        "capital_gain": 0,
-        "capital_loss": 0,
-        "hours_per_week": 50,
-        "native-country": "United-States"
-    }])
-    cat_features = [
-        "workclass",
-        "education",
-        "marital-status",
-        "occupation",
-        "relationship",
-        "race",
-        "sex",
-        "native-country"
-    ]
+def test_train_model():
+    assert model is not None
 
-    model = joblib.load("./model/RandomForestRegressor_model.pkl")
-    enc = joblib.load("./model/encoder.enc")
-    lb_enc = joblib.load("./model/lb.enc")
 
-    processed_data, _, _, _ = process_data(
-        data,
-        categorical_features=cat_features,
-        training=False,
-        encoder=enc,
-        lb=lb_enc)
-    result = inference(model, processed_data)
-    assert result == 1
+def test_X_train_data_type():
+    assert isinstance(X_train, np.ndarray)
+
+
+def test_y_train_data_type():
+    assert isinstance(y_train, np.ndarray)

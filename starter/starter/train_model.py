@@ -7,8 +7,32 @@ from ml.data import process_data
 from ml.model import train_model
 from ml.model import compute_model_metrics
 from ml.model import inference
-
 # Add the necessary imports for the starter code.
+
+
+def model_slice_metrix(education_slice):
+    print(data)
+    for slice in education_slice:
+        data_slice = data[data["education"] == slice]
+        X_test_slice, y_test_slice, _, _ = process_data(
+            data_slice,
+            categorical_features=cat_features,
+            label="salary",
+            training=False,
+            encoder=encoder,
+            lb=lb
+        )
+        pred_validate = inference(model, X_test_slice)
+        precision, recall, fbeta = compute_model_metrics(pred_validate,
+                                                         y_test_slice)
+        metrics = {
+            "precision": [precision],
+            "recall": [recall],
+            "fbeta": [fbeta]
+        }
+        metrics_df = pd.DataFrame(metrics)
+        metrics_df.to_csv(f"../data/metrics_slice_{slice}.csv")
+
 
 # Add code to load in the data.
 data = pd.read_csv('../data/census.csv')
@@ -52,6 +76,7 @@ np.savetxt("../data/y_train.csv", y_train)
 
 # Train and save a model.
 model = train_model(X_train, y_train)
+print(type(X_test))
 pred_validate = inference(model, X_test)
 precision, recall, fbeta = compute_model_metrics(pred_validate, y_test)
 metrics = {
@@ -67,31 +92,8 @@ joblib.dump(encoder, "../model/encoder.enc")
 joblib.dump(lb, "../model/lb.enc")
 # mlflow.sklearn.save_model(model,"../model/model")
 
-
-def model_slice_metrix():
-    education_slice = ['Bachelors', 'Some-college', '11th', 'HS-grad',
-                       'Prof-school', 'Assoc-acdm', 'Assoc-voc', '9th',
-                       '7th-8th', '12th', 'Masters', '1st-4th', '10th',
-                       'Doctorate', '5th-6th', 'Preschool']
-    print(data)
-    for slice in education_slice:
-        data_slice = data[data["education"] == slice]
-        X_test_slice, y_test_slice, _, _ = process_data(
-            data_slice,
-            categorical_features=cat_features,
-            label="salary",
-            training=False,
-            encoder=encoder,
-            lb=lb
-        )
-        pred_validate = inference(model, X_test_slice)
-        precision, recall, fbeta = compute_model_metrics(pred_validate,
-                                                         y_test_slice)
-        metrics = {
-            "precision": [precision],
-            "recall": [recall],
-            "fbeta": [fbeta]
-        }
-        print(metrics)
-        metrics_df = pd.DataFrame(metrics)
-        metrics_df.to_csv(f"../data/metrics_slice_{slice}.csv")
+education_slice_list = ['Bachelors', 'Some-college', '11th', 'HS-grad',
+                        'Prof-school', 'Assoc-acdm', 'Assoc-voc', '9th',
+                        '7th-8th', '12th', 'Masters', '1st-4th', '10th',
+                        'Doctorate', '5th-6th', 'Preschool']
+model_slice_metrix(education_slice_list)
