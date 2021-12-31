@@ -21,4 +21,4 @@ data = {
 data = json.dumps(data).encode('utf8')
 response = requests.post(
     "https://udacity-project-4.herokuapp.com/model/inferance", data)
-print(response)
+print(response.json())
